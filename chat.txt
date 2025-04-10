@@ -1,0 +1,634 @@
+{% extends "base.html" %}
+
+{% block title %}FindTravel - Travel Assistant{% endblock %}
+
+{% block head %}
+<style>
+    body, html {
+        height: 100%;
+        overflow: hidden;
+    }
+    
+    .chat-container {
+        height: calc(100vh - 120px);
+        display: flex;
+    }
+    
+    .chat-panel {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+    }
+    
+    .chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+    }
+    
+    .chat-input {
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+    }
+    
+    .visualization-panel {
+        background-color: #f8f9fa;
+        overflow-y: auto;
+    }
+    
+    .message {
+        margin-bottom: 15px;
+        max-width: 80%;
+        display: flex;
+    }
+    
+    .user-message {
+        margin-left: auto;
+        background-color: #007bff;
+        color: white;
+        border-radius: 18px 18px 0 18px;
+    }
+    
+    .assistant-message {
+        margin-right: auto;
+        background-color: #e9ecef;
+        color: #212529;
+        border-radius: 18px 18px 18px 0;
+    }
+    
+    .message-content {
+        padding: 10px 15px;
+    }
+    
+    .message-time {
+        font-size: 0.7rem;
+        text-align: right;
+        opacity: 0.7;
+        margin-top: 4px;
+    }
+    
+    .system-message {
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+    
+    .typing-indicator {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+    }
+    
+    .typing-bubble {
+        width: 10px;
+        height: 10px;
+        margin: 0 1px;
+        background-color: #6c757d;
+        border-radius: 50%;
+        animation: typing-bubble 1s infinite;
+    }
+    
+    .typing-bubble:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    
+    .typing-bubble:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+    
+    @keyframes typing-bubble {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+    
+    .visualization-content {
+        padding: 20px;
+    }
+    
+    .visualization-card {
+        margin-bottom: 20px;
+    }
+    
+    /* Custom theme for the chat interface */
+    .terminal-style .chat-messages {
+        background-color: #f8f9fa;
+        color: #212529;
+        font-family: 'Arial', sans-serif;
+    }
+    
+    .terminal-style .user-message {
+        background-color: #007bff;
+        color: white;
+    }
+    
+    .terminal-style .assistant-message {
+        background-color: #17a2b8;
+        color: white;
+    }
+    
+    .terminal-style .chat-input {
+        background-color: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+    }
+    
+    .terminal-style .form-control {
+        background-color: white;
+        color: #212529;
+        border: 1px solid #ced4da;
+    }
+    
+    .terminal-style .form-control:focus {
+        background-color: white;
+        color: #212529;
+    }
+    
+    .terminal-style .btn-primary {
+        background-color: #17a2b8;
+        border-color: #17a2b8;
+    }
+    
+    .cli-prompt:before {
+        content: "$ ";
+        color: #17a2b8;
+        font-weight: bold;
+    }
+    
+    .step-indicator {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        position: relative;
+    }
+    
+    .step-indicator:before {
+        content: '';
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        right: 20px;
+        height: 2px;
+        background-color: #dee2e6;
+        z-index: 1;
+    }
+    
+    .step {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+    }
+    
+    .step-circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #fff;
+        border: 2px solid #dee2e6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 5px;
+    }
+    
+    .step.active .step-circle {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+    
+    .step.completed .step-circle {
+        background-color: #28a745;
+        color: white;
+        border-color: #28a745;
+    }
+    
+    .step-label {
+        font-size: 0.8rem;
+    }
+    
+    .trip-summary {
+        background-color: rgba(0,0,0,0.03);
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .budget-indicator {
+        height: 10px;
+        background-color: #e9ecef;
+        border-radius: 5px;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        overflow: hidden;
+    }
+    
+    .budget-progress {
+        height: 100%;
+        background-color: #28a745;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="chat-container">
+    <!-- Left panel - Chat interface -->
+    <div class="chat-panel col-md-6 terminal-style">
+        <div class="chat-messages" id="chatMessages">
+            <!-- Initial system message -->
+            <div class="system-message">
+                <span>--- Travel Planning Session Started ---</span>
+            </div>
+            
+            <!-- Welcome message -->
+            <div class="message assistant-message">
+                <div class="message-content">
+                    <p>Welcome to FindTravel! I'm your travel planning assistant. I'll help you plan your perfect trip with flights, hotels, and activities.</p>
+                    <p>{{ initial_message if initial_message else "Where would you like to go for your next adventure?" }}</p>
+                </div>
+            </div>
+            
+            <!-- Messages will be added here dynamically -->
+        </div>
+        
+        <div class="chat-input">
+            <form id="chatForm">
+                <div class="input-group">
+                    <span class="input-group-text cli-prompt"></span>
+                    <input type="text" id="userInput" class="form-control" placeholder="Type your message..." autocomplete="off">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Right panel - Visualization -->
+    <div class="visualization-panel col-md-6">
+        <div class="visualization-content">
+            <div class="step-indicator">
+                <div class="step {% if travel_plan.departure %}completed{% else %}active{% endif %}">
+                    <div class="step-circle">1</div>
+                    <div class="step-label">Trip Details</div>
+                </div>
+                <div class="step {% if travel_plan.flights %}completed{% elif travel_plan.departure %}active{% endif %}">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">Flights</div>
+                </div>
+                <div class="step {% if travel_plan.hotels %}completed{% elif travel_plan.flights %}active{% endif %}">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">Hotels</div>
+                </div>
+                <div class="step {% if travel_plan.activities %}completed{% elif travel_plan.hotels %}active{% endif %}">
+                    <div class="step-circle">4</div>
+                    <div class="step-label">Activities</div>
+                </div>
+                <div class="step {% if travel_plan.activities %}active{% endif %}">
+                    <div class="step-circle">5</div>
+                    <div class="step-label">Itinerary</div>
+                </div>
+            </div>
+            
+            <!-- Trip summary card -->
+            {% if travel_plan %}
+            <div class="trip-summary">
+                <h4>Trip Summary</h4>
+                {% if travel_plan.destination %}
+                <p><i class="fas fa-map-marker-alt me-2"></i><strong>Destination:</strong> {{ travel_plan.destination.name }}</p>
+                {% endif %}
+                
+                {% if travel_plan.departure %}
+                <p><i class="fas fa-plane-departure me-2"></i><strong>From:</strong> {{ travel_plan.departure.name }}</p>
+                {% endif %}
+                
+                {% if travel_plan.departure_date and travel_plan.return_date %}
+                <p><i class="fas fa-calendar-alt me-2"></i><strong>Dates:</strong> {{ travel_plan.departure_date }} to {{ travel_plan.return_date }}</p>
+                {% endif %}
+                
+                {% if travel_plan.travelers %}
+                <p><i class="fas fa-users me-2"></i><strong>Travelers:</strong> {{ travel_plan.travelers }}</p>
+                {% endif %}
+                
+                {% if travel_plan.total_budget %}
+                <p><i class="fas fa-wallet me-2"></i><strong>Budget:</strong> ${{ "%.2f"|format(travel_plan.total_budget) }}</p>
+                <p><strong>Remaining:</strong> ${{ "%.2f"|format(travel_plan.remaining_budget) }}</p>
+                
+                {% set percent_used = ((travel_plan.total_budget - travel_plan.remaining_budget) / travel_plan.total_budget) * 100 if travel_plan.total_budget > 0 else 0 %}
+                <div class="budget-indicator">
+                    <div class="budget-progress" style="width: {{ percent_used }}%;"></div>
+                </div>
+                <small>{{ "%.1f"|format(percent_used) }}% of budget used</small>
+                {% endif %}
+            </div>
+            {% endif %}
+            
+            <!-- Current visualization content - will change based on conversation state -->
+            <div id="visualizationContent">
+                {% if current_view == 'destination' %}
+                    <!-- Destination visualization -->
+                    {{ destination_content|safe if destination_content else '
+                    <div class="card visualization-card">
+                        <div class="card-header bg-info text-white">
+                            <h5><i class="fas fa-globe me-2"></i>Choose Your Destination</h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <img src="' ~ url_for('static', filename='img/travel-hero.jpg') ~ '" class="img-fluid rounded" alt="Travel inspiration" style="max-height: 300px;">
+                            <p class="mt-3">Tell me where you\'d like to go for your next adventure!</p>
+                        </div>
+                    </div>
+                    ' }}
+                {% elif current_view == 'flights' %}
+                    <!-- Flight visualization -->
+                    <div class="card visualization-card">
+                        <div class="card-header bg-primary text-white">
+                            <h5><i class="fas fa-plane me-2"></i>Flight Options</h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- Dynamic flight content will be inserted here -->
+                            {{ flight_content|safe if flight_content else '<p>Searching for flights...</p>' }}
+                        </div>
+                    </div>
+                {% elif current_view == 'hotels' %}
+                    <!-- Hotel visualization -->
+                    <div class="card visualization-card">
+                        <div class="card-header bg-success text-white">
+                            <h5><i class="fas fa-hotel me-2"></i>Hotel Options</h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- Dynamic hotel content will be inserted here -->
+                            {{ hotel_content|safe if hotel_content else '<p>Searching for hotels...</p>' }}
+                        </div>
+                    </div>
+                {% elif current_view == 'activities' %}
+                    <!-- Activity visualization -->
+                    <div class="card visualization-card">
+                        <div class="card-header bg-warning text-dark">
+                            <h5><i class="fas fa-hiking me-2"></i>Activity Options</h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- Dynamic activity content will be inserted here -->
+                            {{ activity_content|safe if activity_content else '<p>Searching for activities...</p>' }}
+                        </div>
+                    </div>
+                {% elif current_view == 'itinerary' %}
+                    <!-- Itinerary visualization -->
+                    <div class="card visualization-card">
+                        <div class="card-header bg-dark text-white">
+                            <h5><i class="fas fa-clipboard-list me-2"></i>Your Itinerary</h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- Dynamic itinerary content will be inserted here -->
+                            {{ itinerary_content|safe if itinerary_content else '<p>Building your itinerary...</p>' }}
+                        </div>
+                    </div>
+                {% else %}
+                    <!-- Default: Travel inspiration -->
+                    <div class="card visualization-card">
+                        <div class="card-header bg-info text-white">
+                            <h5><i class="fas fa-globe me-2"></i>Travel Inspiration</h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <img src="{{ url_for('static', filename='img/travel-hero.jpg') }}" class="img-fluid rounded" alt="Travel inspiration" style="max-height: 300px;">
+                            <p class="mt-3">Let's plan your dream trip together. Tell me where you'd like to go!</p>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const chatMessages = document.getElementById('chatMessages');
+    const chatForm = document.getElementById('chatForm');
+    const userInput = document.getElementById('userInput');
+    const visualizationContent = document.getElementById('visualizationContent');
+    
+    // Set dynamic placeholder based on current view
+    const currentView = '{{ current_view }}';
+    if (currentView === 'welcome' || !currentView || currentView === 'destination_entry') {
+        userInput.placeholder = "Enter destination (e.g., Paris, Tokyo)...";
+    } else if (currentView === 'departure_entry' || (currentView === 'destination' && "{{ initial_message }}".includes("departing from"))) {
+        userInput.placeholder = "Enter departure city...";
+    } else if (currentView === 'date_entry' || (currentView === 'destination' && "{{ initial_message }}".includes("depart"))) {
+        userInput.placeholder = "Enter departure date (YYYY-MM-DD)...";
+    } else if (currentView === 'return_date_entry' || (currentView === 'destination' && "{{ initial_message }}".includes("return"))) {
+        userInput.placeholder = "Enter return date (YYYY-MM-DD)...";
+    } else if (currentView === 'travelers_entry' || (currentView === 'destination' && "{{ initial_message }}".includes("travelers"))) {
+        userInput.placeholder = "Enter number of travelers...";
+    } else if (currentView === 'budget_entry' || (currentView === 'destination' && "{{ initial_message }}".includes("budget"))) {
+        userInput.placeholder = "Enter your budget (e.g., $3000)...";
+    } else {
+        userInput.placeholder = "Type your message...";
+    }
+    
+    // Scroll chat to bottom
+    function scrollToBottom() {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    // Add a message to the chat
+    function addMessage(content, isUser = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${isUser ? 'user-message' : 'assistant-message'}`;
+        
+        const messageContent = document.createElement('div');
+        messageContent.className = 'message-content';
+        messageContent.innerHTML = content;
+        
+        const messageTime = document.createElement('div');
+        messageTime.className = 'message-time';
+        const now = new Date();
+        messageTime.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        messageDiv.appendChild(messageContent);
+        messageDiv.appendChild(messageTime);
+        
+        chatMessages.appendChild(messageDiv);
+        scrollToBottom();
+    }
+    
+    // Add a system message
+    function addSystemMessage(content) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'system-message';
+        messageDiv.innerHTML = `<span>${content}</span>`;
+        chatMessages.appendChild(messageDiv);
+        scrollToBottom();
+    }
+    
+    // Show typing indicator
+    function showTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'message assistant-message typing-indicator';
+        typingDiv.id = 'typingIndicator';
+        
+        const bubble1 = document.createElement('div');
+        bubble1.className = 'typing-bubble';
+        
+        const bubble2 = document.createElement('div');
+        bubble2.className = 'typing-bubble';
+        
+        const bubble3 = document.createElement('div');
+        bubble3.className = 'typing-bubble';
+        
+        typingDiv.appendChild(bubble1);
+        typingDiv.appendChild(bubble2);
+        typingDiv.appendChild(bubble3);
+        
+        chatMessages.appendChild(typingDiv);
+        scrollToBottom();
+    }
+    
+    // Hide typing indicator
+    function hideTypingIndicator() {
+        const typingIndicator = document.getElementById('typingIndicator');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+    }
+    
+    // Update visualization
+    function updateVisualization(html, type) {
+        // First update the visualization in the DOM
+        const visualizationDiv = document.getElementById('visualizationContent');
+        
+        if (type === 'destination') {
+            visualizationDiv.innerHTML = html;
+        } else if (type === 'flight') {
+            visualizationDiv.innerHTML = `
+            <div class="card visualization-card">
+                <div class="card-header bg-primary text-white">
+                    <h5><i class="fas fa-plane me-2"></i>Flight Options</h5>
+                </div>
+                <div class="card-body">
+                    ${html}
+                </div>
+            </div>`;
+        } else if (type === 'hotel') {
+            visualizationDiv.innerHTML = `
+            <div class="card visualization-card">
+                <div class="card-header bg-success text-white">
+                    <h5><i class="fas fa-hotel me-2"></i>Hotel Options</h5>
+                </div>
+                <div class="card-body">
+                    ${html}
+                </div>
+            </div>`;
+        } else if (type === 'activity') {
+            visualizationDiv.innerHTML = `
+            <div class="card visualization-card">
+                <div class="card-header bg-warning text-dark">
+                    <h5><i class="fas fa-hiking me-2"></i>Activity Options</h5>
+                </div>
+                <div class="card-body">
+                    ${html}
+                </div>
+            </div>`;
+        } else if (type === 'itinerary') {
+            visualizationDiv.innerHTML = `
+            <div class="card visualization-card">
+                <div class="card-header bg-dark text-white">
+                    <h5><i class="fas fa-clipboard-list me-2"></i>Your Itinerary</h5>
+                </div>
+                <div class="card-body">
+                    ${html}
+                </div>
+            </div>`;
+        }
+        
+        // Also send a request to update it on the server
+        fetch('/update_visualization', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                content: html,
+                type: type
+            }),
+        })
+        .then(response => response.json())
+        .catch(error => {
+            console.error('Error updating visualization:', error);
+        });
+    }
+    
+    // Handle form submission
+    chatForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const userMessage = userInput.value.trim();
+        if (!userMessage) return;
+        
+        // Add user message to chat
+        addMessage(userMessage, true);
+        
+        // Clear input
+        userInput.value = '';
+        
+        // Show typing indicator
+        showTypingIndicator();
+        
+        // Send message to server
+        fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                message: userMessage
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Hide typing indicator
+            hideTypingIndicator();
+            
+            // Add assistant response to chat
+            addMessage(data.message);
+            
+            // Update visualization if provided
+            if (data.visualization) {
+                updateVisualization(data.visualization, data.visualization_type);
+            }
+            
+            // Update system state if needed
+            if (data.system_message) {
+                addSystemMessage(data.system_message);
+            }
+            
+            // Update input placeholder based on the assistant's response
+            if (data.message.includes("departing from")) {
+                userInput.placeholder = "Enter departure city...";
+            } else if (data.message.includes("depart?") || data.message.includes("departure date")) {
+                userInput.placeholder = "Enter departure date (YYYY-MM-DD)...";
+            } else if (data.message.includes("return?") || data.message.includes("return date")) {
+                userInput.placeholder = "Enter return date (YYYY-MM-DD)...";
+            } else if (data.message.includes("travelers")) {
+                userInput.placeholder = "Enter number of travelers...";
+            } else if (data.message.includes("budget")) {
+                userInput.placeholder = "Enter your budget (e.g., $3000)...";
+            }
+        })
+        .catch(error => {
+            hideTypingIndicator();
+            console.error('Error:', error);
+            addSystemMessage('An error occurred. Please try again.');
+        });
+    });
+    
+    // Focus input field on load
+    userInput.focus();
+    
+    // Scroll to bottom initially
+    scrollToBottom();
+});
+</script>
+{% endblock %}

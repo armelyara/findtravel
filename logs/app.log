@@ -1,0 +1,99 @@
+2025-04-10 01:28:16,535 - app - DEBUG - Response: I couldn't understand the date. Please provide the departure date in YYYY-MM-DD format (e.g., 2025-06-15).
+2025-04-10 01:34:16,368 - app - DEBUG - Created a new travel plan
+2025-04-10 01:34:16,368 - app - DEBUG - Current state: departure_entry
+2025-04-10 01:34:26,200 - app - DEBUG - Received chat message: 'paris'
+2025-04-10 01:34:26,200 - app - DEBUG - Current state before processing: departure_entry
+2025-04-10 01:34:26,201 - app - DEBUG - Travel plan destination: {'iata': None, 'name': None}
+2025-04-10 01:34:26,201 - app - DEBUG - Travel plan departure: {'iata': None, 'name': None}
+2025-04-10 01:34:26,201 - app - DEBUG - User message: paris
+2025-04-10 01:34:26,201 - app - DEBUG - Processing with state: departure_entry
+2025-04-10 01:34:26,201 - app - DEBUG - Special case handling for 'paris' as first message
+2025-04-10 01:34:26,201 - app - DEBUG - State after processing: departure_entry
+2025-04-10 01:34:26,202 - app - DEBUG - Response: Great! Paris is a wonderful choice. Where will you be departing from?
+2025-04-10 01:34:31,038 - app - DEBUG - Received chat message: 'new york'
+2025-04-10 01:34:31,038 - app - DEBUG - Current state before processing: departure_entry
+2025-04-10 01:34:31,038 - app - DEBUG - Travel plan destination: {'iata': 'CDG', 'name': 'Paris'}
+2025-04-10 01:34:31,038 - app - DEBUG - Travel plan departure: {'iata': None, 'name': None}
+2025-04-10 01:34:31,038 - app - DEBUG - User message: new york
+2025-04-10 01:34:31,039 - app - DEBUG - Processing with state: departure_entry
+2025-04-10 01:34:31,039 - app - DEBUG - Normal processing with state: departure_entry
+2025-04-10 01:34:31,039 - app - DEBUG - Processing departure location with message: 'new york'
+2025-04-10 01:34:31,039 - app - DEBUG - State after processing: departure_entry
+2025-04-10 01:34:31,040 - app - DEBUG - Response: Departure location set to New York. When do you plan to depart? (Please use YYYY-MM-DD format)
+2025-04-10 01:35:22,448 - app - DEBUG - Received chat message: '2025-11-20'
+2025-04-10 01:35:22,448 - app - DEBUG - Current state before processing: departure_entry
+2025-04-10 01:35:22,448 - app - DEBUG - Travel plan destination: {'iata': 'CDG', 'name': 'Paris'}
+2025-04-10 01:35:22,448 - app - DEBUG - Travel plan departure: {'iata': 'JFK', 'name': 'New York'}
+2025-04-10 01:35:22,448 - app - DEBUG - User message: 2025-11-20
+2025-04-10 01:35:22,449 - app - DEBUG - Processing with state: departure_entry
+2025-04-10 01:35:22,449 - app - DEBUG - Normal processing with state: departure_entry
+2025-04-10 01:35:22,449 - app - DEBUG - Processing departure location with message: '2025-11-20'
+2025-04-10 01:35:22,449 - app - DEBUG - State after processing: departure_entry
+2025-04-10 01:35:22,449 - app - DEBUG - Response: I couldn't understand the departure location. Please provide a valid city.
+2025-04-10 01:40:43,948 - app - DEBUG - Created a new travel plan
+2025-04-10 01:40:43,948 - app - DEBUG - Current state: date_entry
+2025-04-10 01:40:58,883 - app - DEBUG - Received chat message: 'paris'
+2025-04-10 01:40:58,883 - app - DEBUG - Current state before processing: date_entry
+2025-04-10 01:40:58,883 - app - DEBUG - Travel plan destination: {'iata': None, 'name': None}
+2025-04-10 01:40:58,884 - app - DEBUG - Travel plan departure: {'iata': None, 'name': None}
+2025-04-10 01:40:58,884 - app - DEBUG - User message: paris
+2025-04-10 01:40:58,884 - app - DEBUG - Processing with state: date_entry
+2025-04-10 01:40:58,884 - app - DEBUG - Special case handling for 'paris' as first message
+2025-04-10 01:40:58,884 - app - DEBUG - State after processing: date_entry
+2025-04-10 01:40:58,884 - app - DEBUG - Response: Great! Paris is a wonderful choice. Where will you be departing from?
+2025-04-10 01:41:04,586 - app - DEBUG - Received chat message: 'new york'
+2025-04-10 01:41:04,587 - app - DEBUG - Current state before processing: date_entry
+2025-04-10 01:41:04,587 - app - DEBUG - Travel plan destination: {'iata': 'CDG', 'name': 'Paris'}
+2025-04-10 01:41:04,587 - app - DEBUG - Travel plan departure: {'iata': None, 'name': None}
+2025-04-10 01:41:04,587 - app - DEBUG - User message: new york
+2025-04-10 01:41:04,587 - app - DEBUG - Processing with state: date_entry
+2025-04-10 01:41:04,587 - app - DEBUG - Normal processing with state: date_entry
+2025-04-10 01:41:04,587 - app - DEBUG - Processing departure date with message: 'new york'
+2025-04-10 01:41:04,588 - app - DEBUG - State after processing: date_entry
+2025-04-10 01:41:04,588 - app - DEBUG - Response: I couldn't understand the date. Please provide the departure date in YYYY-MM-DD format (e.g., 2025-06-15).
+2025-04-10 02:01:21,436 - app - DEBUG - Created a new travel plan
+2025-04-10 02:01:21,437 - app - DEBUG - Current state: date_entry
+2025-04-10 02:01:38,487 - app - DEBUG - Received chat message: 'paris'
+2025-04-10 02:01:38,488 - app - DEBUG - Current state before processing: date_entry
+2025-04-10 02:01:38,488 - app - DEBUG - Travel plan destination: {'iata': None, 'name': None}
+2025-04-10 02:01:38,488 - app - DEBUG - Travel plan departure: {'iata': None, 'name': None}
+2025-04-10 02:01:38,488 - app - DEBUG - User message: paris
+2025-04-10 02:01:38,488 - app - DEBUG - Processing with state: date_entry
+2025-04-10 02:01:38,489 - app - DEBUG - Special case handling for 'paris' as first message
+2025-04-10 02:01:38,489 - app - DEBUG - State after processing: date_entry
+2025-04-10 02:01:38,489 - app - DEBUG - Response: Great! Paris is a wonderful choice. Where will you be departing from?
+2025-04-10 02:01:43,887 - app - DEBUG - Received chat message: 'new york'
+2025-04-10 02:01:43,888 - app - DEBUG - Current state before processing: date_entry
+2025-04-10 02:01:43,888 - app - DEBUG - Travel plan destination: {'iata': 'CDG', 'name': 'Paris'}
+2025-04-10 02:01:43,888 - app - DEBUG - Travel plan departure: {'iata': None, 'name': None}
+2025-04-10 02:01:43,888 - app - DEBUG - User message: new york
+2025-04-10 02:01:43,888 - app - DEBUG - Processing with state: date_entry
+2025-04-10 02:01:43,888 - app - DEBUG - Normal processing with state: date_entry
+2025-04-10 02:01:43,889 - app - DEBUG - Processing departure date with message: 'new york'
+2025-04-10 02:01:43,889 - app - DEBUG - State after processing: date_entry
+2025-04-10 02:01:43,889 - app - DEBUG - Response: I couldn't understand the date. Please provide the departure date in YYYY-MM-DD format (e.g., 2025-06-15).
+2025-04-10 02:03:10,849 - app - DEBUG - Created a new travel plan
+2025-04-10 02:03:10,850 - app - DEBUG - Current state: date_entry
+2025-04-10 02:03:27,951 - app - DEBUG - Loaded existing travel plan from session: {'total_budget': None, 'remaining_budget': None, 'departure': {'iata': None, 'name': None}, 'destination': {'iata': None, 'name': None}, 'departure_date': None, 'return_date': None, 'travelers': None, 'flights': None, 'hotels': None, 'activities': []}
+2025-04-10 02:03:27,952 - app - DEBUG - Current state: date_entry
+2025-04-10 02:13:44,744 - app - DEBUG - Created a new travel plan
+2025-04-10 02:13:44,744 - app - DEBUG - Current state: date_entry
+2025-04-10 02:14:01,729 - app - DEBUG - Received chat message: 'paris'
+2025-04-10 02:14:01,729 - app - DEBUG - Current state before processing: date_entry
+2025-04-10 02:14:01,730 - app - DEBUG - Travel plan destination: {'iata': None, 'name': None}
+2025-04-10 02:14:01,730 - app - DEBUG - Travel plan departure: {'iata': None, 'name': None}
+2025-04-10 02:14:01,730 - app - DEBUG - User message: paris
+2025-04-10 02:14:01,730 - app - DEBUG - Processing with state: date_entry
+2025-04-10 02:14:01,730 - app - DEBUG - Special case handling for 'paris' as first message
+2025-04-10 02:14:01,730 - app - DEBUG - State after processing: date_entry
+2025-04-10 02:14:01,730 - app - DEBUG - Response: Great! Paris is a wonderful choice. Where will you be departing from?
+2025-04-10 02:14:05,970 - app - DEBUG - Received chat message: 'new york'
+2025-04-10 02:14:05,970 - app - DEBUG - Current state before processing: date_entry
+2025-04-10 02:14:05,970 - app - DEBUG - Travel plan destination: {'iata': 'CDG', 'name': 'Paris'}
+2025-04-10 02:14:05,970 - app - DEBUG - Travel plan departure: {'iata': None, 'name': None}
+2025-04-10 02:14:05,971 - app - DEBUG - User message: new york
+2025-04-10 02:14:05,971 - app - DEBUG - Processing with state: date_entry
+2025-04-10 02:14:05,971 - app - DEBUG - Normal processing with state: date_entry
+2025-04-10 02:14:05,971 - app - DEBUG - Processing departure date with message: 'new york'
+2025-04-10 02:14:05,971 - app - DEBUG - State after processing: date_entry
+2025-04-10 02:14:05,972 - app - DEBUG - Response: I couldn't understand the date. Please provide the departure date in YYYY-MM-DD format (e.g., 2025-06-15).

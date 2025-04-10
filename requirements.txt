@@ -1,0 +1,6 @@
+#openai-langchain
+langchain_community
+googlemaps
+python-dotenv
+langchain-openai
+requests==2.31.0

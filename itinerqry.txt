@@ -1,0 +1,106 @@
+============================================================
+TRAVEL ITINERARY
+============================================================
+
+Trip to New York
+From 2025-11-02 to 2025-11-20
+Travelers: 1
+
+Total Budget: $5000.00
+Remaining Budget: $1302.99
+
+============================================================
+FLIGHT DETAILS
+============================================================
+
+Price: $241.01
+
+SELECTED FLIGHT:
+==================================================
+💰 Total Price: $241.01
+
+✈️ OUTBOUND (PT8H15M):
+  Paris → New York
+  Airline: 6X
+  Stops: 0
+
+  • CDG → JFK
+    Depart: 10:30 | Arrive: 12:45
+    Flight: 6X1300 | Duration: PT8H15M
+
+🛬 RETURN (PT4H):
+  New York → Paris
+  Airline: 6X
+  Stops: 0
+
+  • JFK → CDG
+    Depart: 10:00 | Arrive: 20:00
+    Flight: 6X1563 | Duration: PT4H
+
+
+==================================================
+==================================================
+💰 Total Price: $241.01
+
+✈️ OUTBOUND (PT8H15M):
+  Paris → New York
+  Airline: 6X
+  Stops: 0
+
+  • CDG → JFK
+    Depart: 10:30 | Arrive: 12:45
+    Flight: 6X1301 | Duration: PT8H15M
+
+🛬 RETURN (PT4H):
+  New York → Paris
+  Airline: 6X
+  Stops: 0
+
+  • JFK → CDG
+    Depart: 10:00 | Arrive: 20:00
+    Flight: 6X1563 | Duration: PT4H
+
+
+==================================================
+==================================================
+💰 Total Price: $241.01
+
+✈️ OUTBOUND (PT8H15M):
+  Paris → New York
+  Airline: 6X
+  Stops: 0
+
+  • CDG → JFK
+    Depart: 10:30 | Arrive: 12:45
+    Flight: 6X1302 | Duration: PT8H15M
+
+🛬 RETURN (PT4H):
+  New York → Paris
+  Airline: 6X
+  Stops: 0
+
+  • JFK → CDG
+    Depart: 10:00 | Arrive: 20:00
+    Flight: 6X1563 | Duration: PT4H
+
+============================================================
+
+============================================================
+ACCOMMODATION DETAILS
+============================================================
+
+Option 2
+Price: $3416.00
+Duration: 18 nights
+
+============================================================
+ACTIVITIES
+============================================================
+
+Total activities cost: $40.00
+
+1. Activity option 3 - $40.00
+
+============================================================
+Generated on 2025-04-08 at 20:55
+============================================================
