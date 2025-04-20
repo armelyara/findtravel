@@ -10,7 +10,6 @@ from services.flight_service import FlightService
 from services.hotel_service import HotelService
 from services.activity_service import ActivityService
 from langchain_openai import OpenAI
-from ui.cli import TravelPlannerUI
 
 
 
@@ -42,7 +41,7 @@ def main():
     travel_plan = TravelPlan()
     
     # Initialize UI with services
-    cli = TravelPlannerUI(
+    cli = TravelPlannerCLI(
         travel_plan=travel_plan,
         flight_service=flight_service,
         hotel_service=hotel_service,

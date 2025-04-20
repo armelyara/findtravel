@@ -5,11 +5,16 @@ from services.api_wrappers import search_flights, format_flight_data, get_hotel_
 from utils.location_utils import find_iata_code
 from utils.date_utils import validate_date_format
 
+api_key = st.secrets["api_keys"]["OPENAI_API_KEY"]
+api_key = st.secrets["api_keys"]["GOOGLE_MAPS_API_KEY"]
+api_key = st.secrets["api_keys"]["AMADEUS_CLIENT_ID"]
+api_key = st.secrets["api_keys"]["AMADEUS_CLIENT_SECRET"]
+
 # Initialize session state
 if 'travel_plan' not in st.session_state:
     st.session_state.travel_plan = TravelPlan()
     st.session_state.messages = [
-        {"role": "assistant", "content": "👋 Welcome to the Travel Planning Assistant! Where would you like to go on your next trip?"}
+        {"role": "assistant", "content": "👋 Welcome to FindTravel, your Planning Assistant! Where would you like to go on your next trip?"}
     ]
     st.session_state.current_step = "destination"
     st.session_state.pending_action = None
@@ -371,7 +376,7 @@ class IntegratedTravelAgent:
         col1, col2 = st.columns([3, 1])
         
         with col1:
-            st.header("Travel Planning Assistant")
+            st.header("FindTravel")
             self.display_conversation()
             
             if prompt := st.chat_input("Type your message..."):
