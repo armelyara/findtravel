@@ -6,10 +6,10 @@ from utils.location_utils import find_iata_code
 from utils.date_utils import validate_date_format
 
 
-OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]["OPENAI_API_KEY"]
-GOOGLE_MAPS_API_KEY = st.secrets["GOOGLE_MAPS_API_KEY"]["GOOGLE_MAPS_API_KEY"]
-AMADEUS_CLIENT_ID = st.secrets["AMADEUS_API_KEY"]["AMADEUS_CLIENT_ID"]
-AMADEUS_CLIENT_SECRET = st.secrets["AMADEUS_API_KEY"]["AMADEUS_CLIENT_SECRET"]
+OPENAI_API_KEY = st.secrets["openai"]["api_key"]
+GOOGLE_MAPS_API_KEY = st.secrets["google_maps"]["api_key"]
+AMADEUS_CLIENT_ID = st.secrets["amadeus"]["client_id"]
+AMADEUS_CLIENT_SECRET = st.secrets["amadeus"]["client_secret"]
 
 # Initialize session state
 if 'travel_plan' not in st.session_state:
