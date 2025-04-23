@@ -7,6 +7,3 @@ venv/
 trav_venv/
 __pycache__/
 *.pyc
-node_modules
-node_modules
-node_modules
