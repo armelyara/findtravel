@@ -61,7 +61,7 @@ def search_flights(departure_iata: str, destination_iata: str, departure_date: s
         "max": 5
     }
 
-    url = "https://test.api.amadeus.com/v2/shopping/flight-offers"
+    url = "https://api.amadeus.com/v2/shopping/flight-offers"
     try:
         response = requests.get(url, headers=headers, params=params)
         if response.status_code == 200:

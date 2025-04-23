@@ -23,7 +23,7 @@ class AmadeusTokenManager:
         if self.token and time.time() < (self.expiry_time - 300):
             return self.token
             
-        url = "https://test.api.amadeus.com/v1/security/oauth2/token"
+        url = "https://api.amadeus.com/v1/security/oauth2/token"
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         data = {
             "grant_type": "client_credentials",
@@ -104,7 +104,7 @@ class LocationService:
             }
             try:
                 response = requests.get(
-                    "https://test.api.amadeus.com/v1/reference-data/locations",
+                    "https://api.amadeus.com/v1/reference-data/locations",
                     headers=headers,
                     params=params
                 )

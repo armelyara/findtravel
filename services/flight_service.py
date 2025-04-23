@@ -145,7 +145,7 @@ class FlightService:
         destination = travel_plan.destination.get('iata')
         
         # Prepare API parameters
-        url = "https://test.api.amadeus.com/v2/shopping/flight-offers"
+        url = "https://api.amadeus.com/v2/shopping/flight-offers"
         
         headers = {
             "Authorization": f"Bearer {self.access_token}"
