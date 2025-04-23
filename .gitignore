@@ -1,3 +1,12 @@
 .env
 node_modules
 .streamlit/secrets.toml
+
+# Environnements Python
+venv/
+trav_venv/
+__pycache__/
+*.pyc
+node_modules
+node_modules
+node_modules
