@@ -50,7 +50,7 @@ FindTravel is an intelligent travel planning assistant that helps users plan com
 
 Run the application:
 ```
-python run.py
+python main.py
 ```
 
 or make it executable:
